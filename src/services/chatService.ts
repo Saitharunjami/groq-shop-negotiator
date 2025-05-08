@@ -2,7 +2,7 @@
 import { ChatMessage, Product } from "@/lib/types";
 
 // GROQ API Key - In a real app, this would be better secured
-const GROQ_API_KEY = "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";
+const GROQ_API_KEY = "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";
 const API_URL = "https://api.groq.com/openai/v1/chat/completions";
 
 export const generateSystemPrompt = (product: Product) => {

@@ -19,6 +19,9 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Recommendations from "./pages/Recommendations";
 import Chat from "./pages/Chat";
+import Profile from "./pages/Profile";
+import OrderHistory from "./pages/OrderHistory";
+import ProductRecommendations from "./pages/ProductRecommendations";
 
 // Admin Pages
 import AdminDashboard from "./pages/admin/Dashboard";
@@ -48,6 +51,9 @@ const App = () => (
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/recommendations" element={<Recommendations />} />
                 <Route path="/chat" element={<Chat />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/orders" element={<OrderHistory />} />
+                <Route path="/visual-search" element={<ProductRecommendations />} />
                 
                 {/* Admin Routes */}
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
