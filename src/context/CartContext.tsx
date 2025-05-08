@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { CartItem, Product } from '@/lib/types';
 import { useAuth } from './AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
 interface CartContextType {
@@ -13,6 +14,7 @@ interface CartContextType {
   totalItems: number;
   totalPrice: number;
   setNegotiatedPrice: (productId: string, price: number) => void;
+  createOrder: () => Promise<string | null>;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -126,6 +128,58 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return total + (itemPrice * item.quantity);
   }, 0);
 
+  const createOrder = async (): Promise<string | null> => {
+    if (!user) {
+      toast.error('You must be logged in to create an order');
+      return null;
+    }
+
+    if (items.length === 0) {
+      toast.error('Your cart is empty');
+      return null;
+    }
+
+    try {
+      // 1. Create order
+      const { data: order, error: orderError } = await supabase
+        .from('orders')
+        .insert({
+          user_id: user.id,
+          status: 'pending',
+          total: totalPrice
+        })
+        .select()
+        .single();
+
+      if (orderError) throw orderError;
+
+      // 2. Create order items
+      const orderItems = items.map(item => ({
+        order_id: order.id,
+        product_id: item.productId,
+        quantity: item.quantity,
+        price: item.product.price,
+        negotiated_price: item.negotiatedPrice
+      }));
+
+      const { error: itemsError } = await supabase
+        .from('order_items')
+        .insert(orderItems);
+
+      if (itemsError) throw itemsError;
+
+      // 3. Success - clear cart and return order ID
+      clearCart();
+      toast.success('Order created successfully!');
+      return order.id;
+
+    } catch (error) {
+      console.error('Error creating order:', error);
+      toast.error('Failed to create order');
+      return null;
+    }
+  };
+
   const value = {
     items,
     addItem,
@@ -135,6 +189,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     totalItems,
     totalPrice,
     setNegotiatedPrice,
+    createOrder,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

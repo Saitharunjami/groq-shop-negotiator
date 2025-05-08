@@ -10,7 +10,8 @@ import {
   Search,
   Menu,
   X,
-  Package
+  Package,
+  MessageSquare
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
@@ -49,6 +50,7 @@ const Header: React.FC = () => {
         <div className="hidden md:flex items-center space-x-6">
           <Link to="/products" className="hover:text-accent transition-colors">Products</Link>
           {user && <Link to="/recommendations" className="hover:text-accent transition-colors">Recommendations</Link>}
+          {user && <Link to="/chat" className="hover:text-accent transition-colors">Chat</Link>}
           {isAdmin && <Link to="/admin/dashboard" className="hover:text-accent transition-colors">Admin Dashboard</Link>}
         </div>
 
@@ -68,6 +70,10 @@ const Header: React.FC = () => {
 
         {/* User Actions - Desktop */}
         <div className="hidden md:flex items-center space-x-4">
+          <Link to="/chat" className="text-white hover:text-accent transition-colors">
+            <MessageSquare size={24} />
+          </Link>
+          
           <Link to="/cart">
             <Button variant="ghost" size="icon" className="relative">
               <ShoppingCart />
@@ -84,7 +90,7 @@ const Header: React.FC = () => {
               <Link to="/account">
                 <Button variant="ghost" size="sm" className="flex items-center">
                   <User className="mr-2 h-4 w-4" />
-                  <span className="hidden lg:inline">{user.name}</span>
+                  <span className="hidden lg:inline">{user.email}</span>
                 </Button>
               </Link>
               <Button variant="ghost" size="icon" onClick={() => logout()}>
@@ -142,6 +148,7 @@ const Header: React.FC = () => {
             {/* Mobile Nav Links */}
             <Link to="/products" onClick={() => setMobileMenuOpen(false)} className="py-2 hover:text-accent">Products</Link>
             {user && <Link to="/recommendations" onClick={() => setMobileMenuOpen(false)} className="py-2 hover:text-accent">Recommendations</Link>}
+            {user && <Link to="/chat" onClick={() => setMobileMenuOpen(false)} className="py-2 hover:text-accent">Chat</Link>}
             {isAdmin && <Link to="/admin/dashboard" onClick={() => setMobileMenuOpen(false)} className="py-2 hover:text-accent">Admin Dashboard</Link>}
             
             {/* User Actions */}
@@ -149,7 +156,7 @@ const Header: React.FC = () => {
               <>
                 <Link to="/account" onClick={() => setMobileMenuOpen(false)} className="py-2 flex items-center gap-2">
                   <User size={18} />
-                  <span>{user.name}</span>
+                  <span>{user.email}</span>
                 </Link>
                 <Button 
                   variant="outline" 

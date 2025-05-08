@@ -18,6 +18,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Recommendations from "./pages/Recommendations";
+import Chat from "./pages/Chat";
 
 // Admin Pages
 import AdminDashboard from "./pages/admin/Dashboard";
@@ -46,6 +47,7 @@ const App = () => (
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/recommendations" element={<Recommendations />} />
+                <Route path="/chat" element={<Chat />} />
                 
                 {/* Admin Routes */}
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
