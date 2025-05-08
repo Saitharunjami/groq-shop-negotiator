@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from '@/components/Layout/MainLayout';
@@ -24,7 +23,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 
 const Checkout = () => {
   const { items, totalPrice, clearCart } = useCart();
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const navigate = useNavigate();
   
   // If not logged in, redirect to login
@@ -43,7 +42,7 @@ const Checkout = () => {
   
   // Form state
   const [shippingInfo, setShippingInfo] = useState({
-    name: user?.name || '',
+    name: profile?.full_name || '',
     email: user?.email || '',
     phone: '',
     address: '',

@@ -33,6 +33,7 @@ export type ChatMessage = {
   role: 'user' | 'assistant' | 'system';
   content: string;
   timestamp: string;
+  user_id?: string; // Added this field to fix the TypeScript errors
 };
 
 export interface Recommendation {

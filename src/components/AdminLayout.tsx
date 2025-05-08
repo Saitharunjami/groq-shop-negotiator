@@ -19,7 +19,7 @@ interface AdminLayoutProps {
 }
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
-  const { user, logout, isAdmin } = useAuth();
+  const { user, logout, isAdmin, profile } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   
@@ -75,7 +75,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         <div className="mt-auto p-4 border-t border-sidebar-border">
           <div className="flex items-center justify-between mb-2">
             <div>
-              <div className="font-medium">{user?.name}</div>
+              <div className="font-medium">{profile?.full_name || user?.email}</div>
               <div className="text-xs text-sidebar-foreground/70">{user?.email}</div>
             </div>
           </div>
